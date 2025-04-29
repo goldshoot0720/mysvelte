@@ -1,100 +1,151 @@
+<svelte:head>
+  <title>草包鋒兄 Svelte</title>
+</svelte:head>
+
 <script>
-	import { createClient } from '@supabase/supabase-js';
-	import { onMount } from 'svelte';
-	import JSConfetti from 'js-confetti'
-	const supabase = createClient('https://lgztvgybalhvppkfpwdc.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnenR2Z3liYWxodnBwa2Zwd2RjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDkwMTQsImV4cCI6MjA1OTkyNTAxNH0.JfB6J38LmdlvUwIgkdRmQcBDnv6OzFaA-D27S0ylVnA')
-	let data = [];
-	let error = null;
-	let loading = true;
-	let id = 0;
-
-	onMount(async () => {
-		const { data: fetchedData, error: fetchError } = await supabase.from('myangularsub2').select();
-		loading = false;
-
-		if (fetchError) {
-			error = fetchError;
-			console.error('Error:', fetchError.message);
-		} else {
-			data = fetchedData;
-			console.log('Data fetched successfully:', data);
-			bank1 = data[0].bank1;
-			bank2 = data[0].bank2;
-			bank3 = data[0].bank3;
-			bank4 = data[0].bank4;
-			bank5 = data[0].bank5;
-			bank6 = data[0].bank6;
-			bank7 = data[0].bank7;
-			bank8 = data[0].bank8;
-			bank9 = data[0].bank9;
-			bank10 = data[0].bank10;
-			const jsConfetti = new JSConfetti();
-			jsConfetti.addConfetti();
-			id = data[0].id;
-		}
-	});
-	let bank1 = $state(100);
-	let bank2 = $state(200);
-	let bank3 = $state(300);
-	let bank4 = $state(400);
-	let bank5 = $state(500);
-	let bank6 = $state(600);
-	let bank7 = $state(700);
-	let bank8 = $state(800);
-	let bank9 = $state(900);
-	let bank10 = $state(1000);
-	let sum = $derived(
-		bank1 + bank2 + bank3 + bank4 + bank5 + bank6 + bank7 + bank8 + bank9 + bank10
-	);
-
-	async function onSaveSaving() {
-		const { data, error } = await supabase
-			.from('myangularsub2')
-			.update({
-				bank1: bank1,
-				bank2: bank2,
-				bank3: bank3,
-				bank4: bank4,
-				bank5: bank5,
-				bank6: bank6,
-				bank7: bank7,
-				bank8: bank8,
-				bank9: bank9,
-				bank10: bank10
-			})
-			.eq('id', id);
-
-		if (error) {
-			console.error('Error updating data:', error);
-		} else {
-			console.log('Data updated successfully:', data);
-			alert('Data updated successfully:', data);
-		}
-	};
+	import Sub from "./sub.svelte";
+	import Sub2 from "./sub2.svelte";
+	import Sub7 from "./sub7.svelte";
 	import { Button } from 'flowbite-svelte';
-</script>
+	let showSub1 = false;
+	let showSub2 = false;
+	let showSub4 = false;
+	let showSub5 = false;
+	let showSub6 = false;
+	let showSub7 = false;
+	let showSub9 = false;
+	function LoadSub1() {
+		if (showSub1) {
+			showSub1 = false;
+		} else {
+			showSub1 = true;
+			showSub2 = false;
+			showSub4 = false;
+			showSub5 = false;
+			showSub6 = false;
+			showSub7 = false;
+			showSub9 = false;
+		}
+	}
+	function LoadSub2() {
+		if (showSub2) {
+			showSub2 = false;
+		} else {
+			showSub2 = true;
+			showSub1 = false;
+			showSub4 = false;
+			showSub5 = false;
+			showSub6 = false;
+			showSub7 = false;
+			showSub9 = false;
+		}
+	}
+	function LoadSub4() {
+		if (showSub4) {
+			showSub4 = false;
+		} else {
+			showSub4 = true;
+			showSub1 = false;
+			showSub2 = false;
+			showSub5 = false;
+			showSub6 = false;
+			showSub7 = false;
+			showSub9 = false;
+		}
+	}
+	function LoadSub5() {
+		if (showSub5) {
+			showSub5 = false;
+		} else {
+			showSub5 = true;
+			showSub1 = false;
+			showSub2 = false;
+			showSub4 = false;
+			showSub6 = false;
+			showSub7 = false;
+			showSub9 = false;
+		}
+	}
+	function LoadSub6() {
+		if (showSub6) {
+			showSub6 = false;
+		} else {
+			showSub6 = true;
+			showSub1 = false;
+			showSub2 = false;
+			showSub4 = false;
+			showSub5 = false;
+			showSub7 = false;
+			showSub9 = false;
 
+		}
+	}
+	function LoadSub7() {
+		if (showSub7) {
+			showSub7 = false;
+		} else {
+			showSub7 = true;
+			showSub1 = false;
+			showSub2 = false;
+			showSub4 = false;
+			showSub5 = false;
+			showSub6 = false;
+			showSub9 = false;
+
+		}
+	}
+	function LoadSub9() {
+		if (showSub9) {
+			showSub9 = false;
+		} else {
+			showSub9 = true;
+			showSub1 = false;
+			showSub2 = false;
+			showSub4 = false;
+			showSub5 = false;
+			showSub6 = false;
+			showSub7 = false;
+		}
+	}
+</script>
 <p>
-	(006)合作金庫(5880)：<input type="number" bind:value={bank1} />
-	(012)台北富邦(2881)：<input type="number" bind:value={bank2} />
+	<Button onclick={LoadSub1}>訂閱資訊管理</Button>
+	<Button onclick={LoadSub2}>銀行資訊管理</Button>
+	<Button>錄取資訊管理</Button>
 </p>
 <p>
-	(013)國泰世華(2882)：<input type="number" bind:value={bank3} />
-	(017)兆豐銀行(2886)：<input type="number" bind:value={bank4} />
+	<Button onclick={LoadSub4}>學習資訊管理</Button>
+	<Button onclick={LoadSub5}>門診處方箋資訊管理</Button>
+	<Button onclick={LoadSub6}>消費資訊管理</Button>
 </p>
 <p>
-	(048)王道銀行(2897)：<input type="number" bind:value={bank5} />
-	(103)新光銀行(2888)：<input type="number" bind:value={bank6} />
+	<Button onclick={LoadSub7}>日期時間資訊管理</Button>
+	<Button>金融市場資訊管理</Button>
+	<Button onclick={LoadSub9}>動畫追劇資訊管理</Button>
 </p>
 <p>
-	(700)中華郵政(0000)：<input type="number" bind:value={bank7} />
-	(808)玉山銀行(2884)：<input type="number" bind:value={bank8} />
+	<Button>部落格資訊管理</Button>
+	<Button>大位天定資訊管理</Button>
+	<Button>保留天定資訊管理</Button>
 </p>
-<p>
-	(812)台新銀行(2887)：<input type="number" bind:value={bank9} />
-	(822)中國信託(2891)：<input type="number" bind:value={bank10} />
-</p>
-<p>
-	(000)累積存款(0000)：<input type="number" bind:value={sum} />
-	<Button onclick={onSaveSaving}>儲存</Button>
-</p>
+{#if showSub1}
+<Sub subtitle= "訂閱" textareavaluetitle1="訂閱項目" textareavaluetitle2="訂閱費用" textareavaluetitle3="訂閱到期日" textareavaluetitle4="備註" myangularsubtitle="myangularsub1" />
+{/if}
+{#if showSub2}
+<Sub2 />
+{/if}
+{#if showSub4}
+<Sub subtitle= "學習" textareavaluetitle1="學習項目" textareavaluetitle2="學習進度" textareavaluetitle3="最近學習日" textareavaluetitle4="備註" myangularsubtitle="myangularsub4" />
+{/if}
+{#if showSub5}
+<Sub subtitle= "門診處方箋" textareavaluetitle1="醫院" textareavaluetitle2="醫師" textareavaluetitle3="處方箋一" textareavaluetitle4="處方箋二" textareavaluetitle5="回診日期" myangularsubtitle="myangularsub5" />
+{/if}
+{#if showSub6}
+<Sub subtitle= "消費" textareavaluetitle1="點數項目" textareavaluetitle2="剩餘點數" textareavaluetitle3="點數到期日" textareavaluetitle4="備註" myangularsubtitle="myangularsub6" />
+{/if}
+{#if showSub7}
+<Sub7 />
+{/if}
+{#if showSub9}
+<Sub subtitle= "動畫追劇" textareavaluetitle1="動畫追劇項目" textareavaluetitle2="當前集數" textareavaluetitle3="最近觀看日" textareavaluetitle4="備註" myangularsubtitle="myangularsub9" />
+{/if}
