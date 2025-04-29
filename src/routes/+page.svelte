@@ -68,8 +68,10 @@
 			console.error('Error updating data:', error);
 		} else {
 			console.log('Data updated successfully:', data);
+			alert('Data updated successfully:', data);
 		}
 	};
+	import { Button } from 'flowbite-svelte';
 </script>
 
 <p>
@@ -94,5 +96,5 @@
 </p>
 <p>
 	(000)累積存款(0000)：<input type="number" bind:value={sum} />
-	<button onclick={onSaveSaving}>儲存</button>
+	<Button onclick={onSaveSaving}>儲存</Button>
 </p>
