@@ -37,20 +37,7 @@
 	let textareavalue5 = $state('');
 
 	onMount(async () => {
-		const { data: fetchedData, error: fetchError } = await supabase
-			.from(myangularsubtitle)
-			.select();
-		loading = false;
-
-		if (fetchError) {
-			error = fetchError;
-			console.error('Error:', fetchError.message);
-		} else {
-			data = fetchedData;
-			console.log('Data fetched successfully:', data);
-			// const jsConfetti = new JSConfetti();
-			// jsConfetti.addConfetti();
-		}
+		onReLoad(); // Fetch data when the component mounts
 	});
 
 	async function onReLoad() {
@@ -64,6 +51,7 @@
 			console.error('Error:', fetchError.message);
 		} else {
 			data = fetchedData;
+			data = data.sort((a, b) => a.textareavalue1.localeCompare(b.textareavalue1));
 			console.log('Data fetched successfully:', data);
 			// const jsConfetti = new JSConfetti();
 			// jsConfetti.addConfetti();
