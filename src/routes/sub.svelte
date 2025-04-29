@@ -11,6 +11,7 @@
 		Checkbox,
 		TableSearch
 	} from 'flowbite-svelte';
+	import { Label, Input,Button } from 'flowbite-svelte';
 	// import JSConfetti from 'js-confetti'
 	const {
 		subtitle,
@@ -57,6 +58,7 @@
 {#if data.length === 0}
 	<p>No data found.</p>
 {/if}
+
 {#if data.length > 0}
 	{#if myangularsubtitle !== 'myangularsub5'}
 		<Table>
@@ -108,3 +110,33 @@
 		<p>Data loaded successfully!</p>
 	{/if}
 {/if}
+
+<div class="mb-6">
+	<Label for="large-input" class="block mb-2">{textareavaluetitle1}：</Label>
+	<Input id="large-input" size="lg" placeholder="" />
+  </div>
+  <div class="mb-6">
+	<Label for="default-input" class="block mb-2">{textareavaluetitle2}：</Label>
+	<Input id="default-input" placeholder="" />
+  </div>
+  <div class="mb-6">
+	<Label for="small-input" class="block mb-2">{textareavaluetitle3}：</Label>
+	<Input id="small-input" size="sm" placeholder="" />
+  </div>
+  {#if myangularsubtitle !== 'myangularsub5'}
+  <div class="mb-6">
+	<Label for="small-input" class="block mb-2">{textareavaluetitle4}：</Label>
+	<textarea id="small-input" size="sm" placeholder="" />
+  </div>
+  {/if}
+  {#if myangularsubtitle === 'myangularsub5'}
+  <div class="mb-6">
+	<Label for="small-input" class="block mb-2">{textareavaluetitle4}：</Label>
+	<Input id="small-input" size="sm" placeholder="" />
+  </div>
+  <div class="mb-6">
+	<Label for="small-input" class="block mb-2">{textareavaluetitle5}：</Label>
+	<Input id="small-input" size="sm" placeholder="" />
+  </div>
+  {/if}
+  <Button color="dark">新增資料</Button>
