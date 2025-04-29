@@ -76,7 +76,6 @@
 </script>
 
 <h1>歡迎來到銀行資訊管理</h1>
-<img src={mysrc} alt="save" width="100"/>
 <p>
 	(006)合作金庫(5880)：<input type="number" bind:value={bank1} />
 	(012)台北富邦(2881)：<input type="number" bind:value={bank2} />
@@ -100,4 +99,5 @@
 <p>
 	(000)累積存款(0000)：<input type="number" bind:value={sum} />
 	<Button onclick={onSaveSaving}>儲存</Button>
+	<img src={mysrc} alt="save" width="100"/>
 </p>
