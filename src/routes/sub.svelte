@@ -199,74 +199,60 @@
 {/if}
 
 {#if data.length > 0}
-	{#if myangularsubtitle !== 'myangularsub5'}
-		<Table hoverable={true} items={data}>
-			<TableHead>
-				<TableHeadCell defaultSort sort={(a, b) => a.textareavalue1.localeCompare(b.textareavalue1)}
-					>{textareavaluetitle1}</TableHeadCell
-				>
-				<TableHeadCell sort={(a, b) => a.textareavalue2.localeCompare(b.textareavalue2)}
-					>{textareavaluetitle2}</TableHeadCell
-				>
-				<TableHeadCell sort={(a, b) => a.textareavalue3.localeCompare(b.textareavalue3)}
-					>{textareavaluetitle3}</TableHeadCell
-				>
-				<TableHeadCell sort={(a, b) => a.textareavalue4.localeCompare(b.textareavalue4)}
-					>{textareavaluetitle4}</TableHeadCell
-				>
-				<TableHeadCell>
-					<span class="sr-only">Actions</span>
-				</TableHeadCell>
-			</TableHead>
-			<TableBody tableBodyClass="divide-y">
-				<TableBodyRow slot="row" let:item>
+{#if myangularsubtitle !== 'myangularsub5'}
+<Table hoverable={true}>
+	<TableHead>
+		<TableHeadCell>{textareavaluetitle1}</TableHeadCell>
+		<TableHeadCell>{textareavaluetitle2}</TableHeadCell>
+		<TableHeadCell>{textareavaluetitle3}</TableHeadCell>
+		<TableHeadCell>{textareavaluetitle4}</TableHeadCell>
+	</TableHead>
+	<TableBody tableBodyClass="divide-y">
+		{#each data as item}
+			{#key item.id}
+				<TableBodyRow>
 					<TableBodyCell>{item.textareavalue1}</TableBodyCell>
 					<TableBodyCell>{item.textareavalue2}</TableBodyCell>
 					<TableBodyCell>{item.textareavalue3}</TableBodyCell>
 					<TableBodyCell>{item.textareavalue4}</TableBodyCell>
-					<TableBodyCell>
-						<div class="flex gap-2">
-							<Button color="none" on:click={() => onSelectDataClick(item)}>選取</Button>
-							<Button color="dark" on:click={() => onUpdateDataClick(item)}>修改</Button>
-							<Button color="blue" on:click={() => onDeleteDataClick(item.id)}>刪除</Button>
-						</div>
-					</TableBodyCell>
+					<Button color="none" onclick={() => onSelectDataClick(item)}>選取</Button>
+					<Button color="dark" onclick={() => onUpdateDataClick(item)}>修改</Button>
+					<Button color="blue" onclick={() => onDeleteDataClick(item.id)}>刪除</Button>
 				</TableBodyRow>
-			</TableBody>
-		</Table>
+			{/key}
+		{/each}
+	</TableBody>
+</Table>
 	{/if}
 
-	{#if data.length > 0}
 	{#if myangularsubtitle === 'myangularsub5'}
-	  <Table hoverable={true} items={data}>
-		<TableHead>
-		  <TableHeadCell sort={(a, b) => a.hospital.localeCompare(b.hospital)}>{textareavaluetitle1}</TableHeadCell>
-		  <TableHeadCell sort={(a, b) => a.doctor.localeCompare(b.doctor)}>{textareavaluetitle2}</TableHeadCell>
-		  <TableHeadCell defaultSort sort={(a, b) => a.prescription1.localeCompare(b.prescription1)}>{textareavaluetitle3}</TableHeadCell>
-		  <TableHeadCell sort={(a, b) => a.prescription2.localeCompare(b.prescription2)}>{textareavaluetitle4}</TableHeadCell>
-		  <TableHeadCell sort={(a, b) => a.prescription3.localeCompare(b.prescription3)}>{textareavaluetitle5}</TableHeadCell>
-		  <TableHeadCell><span class="sr-only">Actions</span></TableHeadCell>
-		</TableHead>
-		<TableBody tableBodyClass="divide-y">
-		  <TableBodyRow slot="row" let:item>
-			<TableBodyCell>{item.hospital}</TableBodyCell>
-			<TableBodyCell>{item.doctor}</TableBodyCell>
-			<TableBodyCell>{item.prescription1}</TableBodyCell>
-			<TableBodyCell>{item.prescription2}</TableBodyCell>
-			<TableBodyCell>{item.prescription3}</TableBodyCell>
-			<TableBodyCell>
-			  <div class="flex gap-2">
-				<Button color="none" on:click={() => onSelectDataClick(item)}>選取</Button>
-				<Button color="dark" on:click={() => onUpdateDataClick(item.id)}>修改</Button>
-				<Button color="blue" on:click={() => onDeleteDataClick(item.id)}>刪除</Button>
-			  </div>
-			</TableBodyCell>
-		  </TableBodyRow>
-		</TableBody>
-	  </Table>
+			<Table>
+				<TableHead>
+					<TableHeadCell>{textareavaluetitle1}</TableHeadCell>
+					<TableHeadCell>{textareavaluetitle2}</TableHeadCell>
+					<TableHeadCell>{textareavaluetitle3}</TableHeadCell>
+					<TableHeadCell>{textareavaluetitle4}</TableHeadCell>
+					<TableHeadCell>{textareavaluetitle5}</TableHeadCell>
+				</TableHead>
+				<TableBody tableBodyClass="divide-y">
+					{#each data as item}
+						{#key item.id}
+							<TableBodyRow>
+								<TableBodyCell>{item.hospital}</TableBodyCell>
+								<TableBodyCell>{item.doctor}</TableBodyCell>
+								<TableBodyCell>{item.prescription1}</TableBodyCell>
+								<TableBodyCell>{item.prescription2}</TableBodyCell>
+								<TableBodyCell>{item.prescription3}</TableBodyCell>
+								<Button color="none" onclick={() => onSelectDataClick(item)}>選取</Button>
+								<Button color="dark" onclick={() => onUpdateDataClick(item.id)}>修改</Button>
+								<Button color="blue" onclick={() => onDeleteDataClick(item.id)}>刪除</Button>
+							</TableBodyRow>
+						{/key}
+					{/each}
+				</TableBody>
+			</Table>
+		<p>Data loaded successfully!</p>
 	{/if}
-	<p>Data loaded successfully!</p>
-  {/if}
   
 {/if}
 
