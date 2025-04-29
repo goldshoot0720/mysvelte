@@ -97,7 +97,7 @@
 	(822)中國信託(2891)：<input type="number" bind:value={bank10} />
 </p>
 <p>
-	(000)累積存款(0000)：<input type="number" bind:value={sum} />
+	(000)累積存款(0000)：<input type="number" value={sum} readonly />
 	<Button onclick={onSaveSaving}>儲存</Button>
 	<img src={mysrc} alt="save" width="100"/>
 </p>

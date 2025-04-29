@@ -9,7 +9,11 @@
 		TableHead,
 		TableHeadCell,
 		Checkbox,
-		TableSearch
+		TableSearch,
+		P,
+
+		Datepicker
+
 	} from 'flowbite-svelte';
 	import { Label, Input, Button } from 'flowbite-svelte';
 	// import JSConfetti from 'js-confetti'
@@ -19,7 +23,6 @@
 		textareavaluetitle2,
 		textareavaluetitle3,
 		textareavaluetitle4,
-		textareavaluetitle5,
 		myangularsubtitle
 	} = $props();
 	const supabase = createClient(
@@ -34,7 +37,6 @@
 	let textareavalue2 = $state('');
 	let textareavalue3 = $state('');
 	let textareavalue4 = $state('');
-	let textareavalue5 = $state('');
 
 	onMount(async () => {
 		onReLoad(); // Fetch data when the component mounts
@@ -59,47 +61,55 @@
 			textareavalue2 = '';
 			textareavalue3 = '';
 			textareavalue4 = '';
-			if (myangularsubtitle === 'myangularsub5') {
-				textareavalue5 = '';
-			}
 		}
 	}
 
-	function onNewDataClick(textareavalue1, textareavalue2, textareavalue3, textareavalue4) {
-		// Validate input fields
-		if (textareavalue1 === '' || textareavalue2 === '' || textareavalue3 === '') {
-			alert(
-				textareavaluetitle1 +
-					'不得為空值\n' +
-					textareavaluetitle2 +
-					'不得為空值\n' +
-					textareavaluetitle3 +
-					'不得為空值'
-			);
-			return;
-		}
+	function onNewDataClick(
+		textareavalue1,
+		textareavalue2,
+		textareavalue3,
+		textareavalue4,
+	) {
 
-		// Insert data into Supabase
-		if (confirm('確定要新增這筆資料嗎？')) {
-			supabase
-				.from(myangularsubtitle) // Ensure the table name is a string
-				.insert([
-					{
-						textareavalue1: textareavalue1,
-						textareavalue2: textareavalue2,
-						textareavalue3: textareavalue3,
-						textareavalue4: textareavalue4
-					}
-				])
-				.then(({ data, error }) => {
-					if (error) {
-						console.error('Error inserting data:', error.message);
-					} else {
-						console.log('Data inserted successfully:', data);
-						onReLoad(); // Reload data after deletion
-					}
-				});
-		}
+			if (
+				textareavalue1 === '' ||
+				textareavalue2 === '' ||
+				textareavalue3 === ''
+			) {
+				alert(
+					textareavaluetitle1 +
+						'不得為空值\n' +
+						textareavaluetitle2 +
+						'不得為空值\n' +
+						textareavaluetitle3 +
+						'不得為空值'
+
+				);
+				return;
+			}
+			// Insert data into Supabase
+			if (confirm('確定要新增這筆資料嗎？')) {
+				supabase
+					.from(myangularsubtitle) // Ensure the table name is a string
+					.insert([
+						{
+							textareavalue1: textareavalue1,
+							textareavalue2: textareavalue2,
+							textareavalue3: textareavalue3,
+							textareavalue4: textareavalue4
+						}
+					])
+					.then(({ data, error }) => {
+						if (error) {
+							console.error('Error inserting data:', error.message);
+						} else {
+							console.log('Data inserted successfully:', data);
+							onReLoad(); // Reload data after deletion
+						}
+					});
+			}
+		
+		
 	}
 
 	function onDeleteDataClick(id) {
@@ -133,23 +143,25 @@
 			return;
 		}
 		if (confirm('確定要修改這筆資料嗎？')) {
-			supabase
-				.from(myangularsubtitle) // Ensure the table name is a string
-				.update({
-					textareavalue1: textareavalue1,
-					textareavalue2: textareavalue2,
-					textareavalue3: textareavalue3,
-					textareavalue4: textareavalue4
-				})
-				.eq('id', data.id)
-				.then(({ data, error }) => {
-					if (error) {
-						console.error('Error updating data:', error.message);
-					} else {
-						console.log('Data updated successfully:', data);
-						onReLoad(); // Reload data after deletion
-					}
-				});
+
+				supabase
+					.from(myangularsubtitle) // Ensure the table name is a string
+					.update({
+						textareavalue1: textareavalue1,
+						textareavalue2: textareavalue2,
+						textareavalue3: textareavalue3,
+						textareavalue4: textareavalue4
+					})
+					.eq('id', data.id)
+					.then(({ data, error }) => {
+						if (error) {
+							console.error('Error updating data:', error.message);
+						} else {
+							console.log('Data updated successfully:', data);
+							onReLoad(); // Reload data after deletion
+						}
+					});
+
 		}
 	}
 
@@ -159,9 +171,6 @@
 		textareavalue2 = item.textareavalue2;
 		textareavalue3 = item.textareavalue3;
 		textareavalue4 = item.textareavalue4;
-		if (myangularsubtitle === 'myangularsub5') {
-			textareavalue5 = item.textareavalue5;
-		}
 	}
 
 	function onEmptyDataClick() {
@@ -169,9 +178,26 @@
 		textareavalue2 = '';
 		textareavalue3 = '';
 		textareavalue4 = '';
-		if (myangularsubtitle === 'myangularsub5') {
-			textareavalue5 = '';
-		}
+	}
+
+	function Dividefor2(textareavalue2){
+		return ((Number(textareavalue2.split('/')[0]) / Number(textareavalue2.split('/')[1]))*100).toFixed(2);
+	}
+
+	function Minusfor2(textareavalue2){
+		return (Number(textareavalue2.split('/')[0]) - (Number(textareavalue2.split('/')[1])));
+	}
+
+	function DateCountdown(textareavalue1){
+		return new Date(textareavalue1).getTime() - new Date().getTime() > 0 ? Math.floor((new Date(textareavalue1).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)) : '已過期';
+	}
+
+	function DateCountdownWeek(textareavalue1){
+		return ( DateCountdown(textareavalue1) / 7 ).toFixed(0);
+	}
+
+	function DateCountdownDay(textareavalue1){
+		return DateCountdown(textareavalue1) % 7;
 	}
 </script>
 
@@ -187,63 +213,40 @@
 {/if}
 
 {#if data.length > 0}
-{#if myangularsubtitle !== 'myangularsub5'}
-<Table hoverable={true}>
-	<TableHead>
-		<TableHeadCell>{textareavaluetitle1}</TableHeadCell>
-		<TableHeadCell>{textareavaluetitle2}</TableHeadCell>
-		<TableHeadCell>{textareavaluetitle3}</TableHeadCell>
-		<TableHeadCell>{textareavaluetitle4}</TableHeadCell>
-	</TableHead>
-	<TableBody tableBodyClass="divide-y">
-		{#each data as item}
-			{#key item.id}
-				<TableBodyRow>
-					<TableBodyCell>{item.textareavalue1}</TableBodyCell>
-					<TableBodyCell>{item.textareavalue2}</TableBodyCell>
-					<TableBodyCell>{item.textareavalue3}</TableBodyCell>
-					<TableBodyCell>{item.textareavalue4}</TableBodyCell>
-					<Button color="none" onclick={() => onSelectDataClick(item)}>選取</Button>
-					<Button color="dark" onclick={() => onUpdateDataClick(item)}>修改</Button>
-					<Button color="blue" onclick={() => onDeleteDataClick(item.id)}>刪除</Button>
-				</TableBodyRow>
-			{/key}
-		{/each}
-	</TableBody>
-</Table>
-	{/if}
+		<Table hoverable={true}>
+			<TableHead>
+				<TableHeadCell>{textareavaluetitle1}</TableHeadCell>
+				<TableHeadCell>{textareavaluetitle2}</TableHeadCell>
+				<TableHeadCell>{textareavaluetitle3}</TableHeadCell>
+				<TableHeadCell>{textareavaluetitle4}</TableHeadCell>
+			</TableHead>
+			<TableBody tableBodyClass="divide-y">
+				{#each data as item}
+					{#key item.id}
+						<TableBodyRow>
+							<TableBodyCell>{item.textareavalue1}</TableBodyCell>
+							<TableBodyCell>{item.textareavalue2}</TableBodyCell>
+							<TableBodyCell>{item.textareavalue3}</TableBodyCell>
+							<TableBodyCell>{item.textareavalue4}</TableBodyCell>				
+							{#if myangularsubtitle === 'myangularsub4'}
+							{Dividefor2(item.textareavalue2)}%
+							{Minusfor2(item.textareavalue2)}
+							{/if}
+							{#if myangularsubtitle === 'myangularsub7'}
+							倒數{DateCountdown(item.textareavalue1)}天
+							或{DateCountdownWeek(item.textareavalue1)}週
+							又{DateCountdownDay(item.textareavalue1)}天
+							{/if}
+							<Button color="none" onclick={() => onSelectDataClick(item)}>選取</Button>
+							<Button color="dark" onclick={() => onUpdateDataClick(item)}>修改</Button>
+							<Button color="blue" onclick={() => onDeleteDataClick(item.id)}>刪除</Button>
+						</TableBodyRow>
+					{/key}
+				{/each}
+			</TableBody>
+		</Table>
 
-	{#if myangularsubtitle === 'myangularsub5'}
-			<Table>
-				<TableHead>
-					<TableHeadCell>{textareavaluetitle1}</TableHeadCell>
-					<TableHeadCell>{textareavaluetitle2}</TableHeadCell>
-					<TableHeadCell>{textareavaluetitle3}</TableHeadCell>
-					<TableHeadCell>{textareavaluetitle4}</TableHeadCell>
-					<TableHeadCell>{textareavaluetitle5}</TableHeadCell>
-				</TableHead>
-				<TableBody tableBodyClass="divide-y">
-					{#each data as item}
-						{#key item.id}
-							<TableBodyRow>
-								<TableBodyCell>{item.hospital}</TableBodyCell>
-								<TableBodyCell>{item.doctor}</TableBodyCell>
-								<TableBodyCell>{item.prescription1}</TableBodyCell>
-								<TableBodyCell>{item.prescription2}</TableBodyCell>
-								<TableBodyCell>{item.prescription3}</TableBodyCell>
-								<Button color="none" onclick={() => onSelectDataClick(item)}>選取</Button>
-								<Button color="dark" onclick={() => onUpdateDataClick(item.id)}>修改</Button>
-								<Button color="blue" onclick={() => onDeleteDataClick(item.id)}>刪除</Button>
-							</TableBodyRow>
-						{/key}
-					{/each}
-				</TableBody>
-			</Table>
-		<p>Data loaded successfully!</p>
-	{/if}
-  
 {/if}
-
 <div class="mb-6">
 	<Label for="large-input" class="mb-2 block">{textareavaluetitle1}：</Label>
 	<Input id="large-input" size="lg" placeholder="" bind:value={textareavalue1} />
@@ -256,41 +259,13 @@
 	<Label for="small-input" class="mb-2 block">{textareavaluetitle3}：</Label>
 	<Input id="small-input" size="sm" placeholder="" bind:value={textareavalue3} />
 </div>
-{#if myangularsubtitle !== 'myangularsub5'}
 	<div class="mb-6">
 		<Label for="small-input" class="mb-2 block">{textareavaluetitle4}：</Label>
 		<textarea id="small-input" size="sm" placeholder="" bind:value={textareavalue4}></textarea>
 	</div>
-{/if}
-{#if myangularsubtitle === 'myangularsub5'}
-	<div class="mb-6">
-		<Label for="small-input" class="mb-2 block">{textareavaluetitle4}：</Label>
-		<Input id="small-input" size="sm" placeholder="" bind:value={textareavalue4} />
-	</div>
-	<div class="mb-6">
-		<Label for="small-input" class="mb-2 block">{textareavaluetitle5}：</Label>
-		<Input id="small-input" size="sm" placeholder="" bind:value={textareavalue5} />
-	</div>
-{/if}
-{#if myangularsubtitle !== 'myangularsub5'}
 	<Button color="none" onclick={onEmptyDataClick}>清空</Button>
 	<Button
 		color="dark"
 		onclick={() => onNewDataClick(textareavalue1, textareavalue2, textareavalue3, textareavalue4)}
 		>新增</Button
 	>
-{/if}
-{#if myangularsubtitle === 'myangularsub5'}
-	<Button color="none" onclick={onEmptyDataClick}>清空</Button>
-	<Button
-		color="dark"
-		onclick={() =>
-			onNewDataClick(
-				textareavalue1,
-				textareavalue2,
-				textareavalue3,
-				textareavalue4,
-				textareavalue5
-			)}>新增</Button
-	>
-{/if}

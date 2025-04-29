@@ -163,11 +163,10 @@
 {#if showSub5}
 	<Sub
 		subtitle="門診處方箋"
-		textareavaluetitle1="醫院"
-		textareavaluetitle2="醫師"
-		textareavaluetitle3="處方箋一"
-		textareavaluetitle4="處方箋二"
-		textareavaluetitle5="回診日期"
+		textareavaluetitle1="醫院/醫師"
+		textareavaluetitle2="處方箋一"
+		textareavaluetitle3="處方箋二"
+		textareavaluetitle4="回診日期"
 		myangularsubtitle="myangularsub5"
 	/>
 {/if}
@@ -182,7 +181,14 @@
 	/>
 {/if}
 {#if showSub7}
-	<Sub7 />
+	<Sub
+		subtitle="日期時間"
+		textareavaluetitle1="日期"
+		textareavaluetitle2="日期資訊"
+		textareavaluetitle3="手動倒數日期"
+		textareavaluetitle4="手動換算倒數日期"
+		myangularsubtitle="myangularsub7"
+	/>
 {/if}
 {#if showSub9}
 	<Sub
