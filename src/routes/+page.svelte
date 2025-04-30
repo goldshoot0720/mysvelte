@@ -1,7 +1,6 @@
 <script>
 	import Sub from './sub.svelte';
 	import Sub2 from './sub2.svelte';
-	import Sub7 from './sub7.svelte';
 	import { Button, ButtonGroup, GradientButton } from 'flowbite-svelte';
 	let showSub1 = false;
 	let showSub2 = false;

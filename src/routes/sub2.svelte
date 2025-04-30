@@ -73,31 +73,66 @@
 		}
 	};
 	import { Button } from 'flowbite-svelte';
+	let ismoreinfo = $state(false);
 </script>
 
+{#if !ismoreinfo}
+<Button color="dark" onclick={() => ismoreinfo = !ismoreinfo}>更多資訊</Button>
+{/if}
+{#if ismoreinfo}
+<Button color="dark" onclick={() => ismoreinfo = !ismoreinfo}>更少資訊</Button>
+{/if}
 <h1>歡迎來到銀行資訊管理</h1>
+{#if !ismoreinfo}
 <p>
-	(006)合作金庫(5880)：<input type="number" bind:value={bank1} />
-	(012)台北富邦(2881)：<input type="number" bind:value={bank2} />
+	合作金庫：<input type="number" bind:value={bank1} style="width: 100px;"/>
+	台北富邦：<input type="number" bind:value={bank2} style="width: 100px;"/>
 </p>
 <p>
-	(013)國泰世華(2882)：<input type="number" bind:value={bank3} />
-	(017)兆豐銀行(2886)：<input type="number" bind:value={bank4} />
+	國泰世華：<input type="number" bind:value={bank3} style="width: 100px;"/>
+	兆豐銀行：<input type="number" bind:value={bank4} style="width: 100px;"/>
 </p>
 <p>
-	(048)王道銀行(2897)：<input type="number" bind:value={bank5} />
-	(103)新光銀行(2888)：<input type="number" bind:value={bank6} />
+	王道銀行：<input type="number" bind:value={bank5} style="width: 100px;"/>
+	新光銀行：<input type="number" bind:value={bank6} style="width: 100px;"/>
 </p>
 <p>
-	(700)中華郵政(0000)：<input type="number" bind:value={bank7} />
-	(808)玉山銀行(2884)：<input type="number" bind:value={bank8} />
+	中華郵政：<input type="number" bind:value={bank7} style="width: 100px;"/>
+	玉山銀行：<input type="number" bind:value={bank8} style="width: 100px;"/>
 </p>
 <p>
-	(812)台新銀行(2887)：<input type="number" bind:value={bank9} />
-	(822)中國信託(2891)：<input type="number" bind:value={bank10} />
+	台新銀行：<input type="number" bind:value={bank9} style="width: 100px;"/>
+	中國信託：<input type="number" bind:value={bank10} style="width: 100px;"/>
+</p>
+<p>
+	累積存款：<input type="number" value={sum} readonly style="width: 100px;"/>
+	<Button onclick={onSaveSaving}>儲存</Button>
+</p>
+{/if}
+{#if ismoreinfo}
+<img src={mysrc} alt="cat" width="100"/>
+<p>
+	(006)合作金庫(5880)：<input type="number" bind:value={bank1} style="width: 120px;"/>
+	(012)台北富邦(2881)：<input type="number" bind:value={bank2} style="width: 120px;"/>
+</p>
+<p>
+	(013)國泰世華(2882)：<input type="number" bind:value={bank3} style="width: 120px;"/>
+	(017)兆豐銀行(2886)：<input type="number" bind:value={bank4} style="width: 120px;"/>
+</p>
+<p>
+	(048)王道銀行(2897)：<input type="number" bind:value={bank5} style="width: 120px;"/>
+	(103)新光銀行(2888)：<input type="number" bind:value={bank6} style="width: 120px;"/>
+</p>
+<p>
+	(700)中華郵政(0000)：<input type="number" bind:value={bank7} style="width: 120px;"/>
+	(808)玉山銀行(2884)：<input type="number" bind:value={bank8} style="width: 120px;"/>
+</p>
+<p>
+	(812)台新銀行(2887)：<input type="number" bind:value={bank9} style="width: 120px;"/>
+	(822)中國信託(2891)：<input type="number" bind:value={bank10} style="width: 120px;"/>
 </p>
 <p>
 	(000)累積存款(0000)：<input type="number" value={sum} readonly />
 	<Button onclick={onSaveSaving}>儲存</Button>
-	<img src={mysrc} alt="save" width="100"/>
 </p>
+{/if}

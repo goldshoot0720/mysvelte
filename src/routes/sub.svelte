@@ -11,9 +11,7 @@
 		Checkbox,
 		TableSearch,
 		P,
-
 		Datepicker
-
 	} from 'flowbite-svelte';
 	import { Label, Input, Button } from 'flowbite-svelte';
 	// import JSConfetti from 'js-confetti'
@@ -37,6 +35,7 @@
 	let textareavalue2 = $state('');
 	let textareavalue3 = $state('');
 	let textareavalue4 = $state('');
+	let ismoreinfo = $state(false);
 
 	onMount(async () => {
 		onReLoad(); // Fetch data when the component mounts
@@ -64,52 +63,39 @@
 		}
 	}
 
-	function onNewDataClick(
-		textareavalue1,
-		textareavalue2,
-		textareavalue3,
-		textareavalue4,
-	) {
-
-			if (
-				textareavalue1 === '' ||
-				textareavalue2 === '' ||
-				textareavalue3 === ''
-			) {
-				alert(
-					textareavaluetitle1 +
-						'不得為空值\n' +
-						textareavaluetitle2 +
-						'不得為空值\n' +
-						textareavaluetitle3 +
-						'不得為空值'
-
-				);
-				return;
-			}
-			// Insert data into Supabase
-			if (confirm('確定要新增這筆資料嗎？')) {
-				supabase
-					.from(myangularsubtitle) // Ensure the table name is a string
-					.insert([
-						{
-							textareavalue1: textareavalue1,
-							textareavalue2: textareavalue2,
-							textareavalue3: textareavalue3,
-							textareavalue4: textareavalue4
-						}
-					])
-					.then(({ data, error }) => {
-						if (error) {
-							console.error('Error inserting data:', error.message);
-						} else {
-							console.log('Data inserted successfully:', data);
-							onReLoad(); // Reload data after deletion
-						}
-					});
-			}
-		
-		
+	function onNewDataClick(textareavalue1, textareavalue2, textareavalue3, textareavalue4) {
+		if (textareavalue1 === '' || textareavalue2 === '' || textareavalue3 === '') {
+			alert(
+				textareavaluetitle1 +
+					'不得為空值\n' +
+					textareavaluetitle2 +
+					'不得為空值\n' +
+					textareavaluetitle3 +
+					'不得為空值'
+			);
+			return;
+		}
+		// Insert data into Supabase
+		if (confirm('確定要新增這筆資料嗎？')) {
+			supabase
+				.from(myangularsubtitle) // Ensure the table name is a string
+				.insert([
+					{
+						textareavalue1: textareavalue1,
+						textareavalue2: textareavalue2,
+						textareavalue3: textareavalue3,
+						textareavalue4: textareavalue4
+					}
+				])
+				.then(({ data, error }) => {
+					if (error) {
+						console.error('Error inserting data:', error.message);
+					} else {
+						console.log('Data inserted successfully:', data);
+						onReLoad(); // Reload data after deletion
+					}
+				});
+		}
 	}
 
 	function onDeleteDataClick(id) {
@@ -143,25 +129,23 @@
 			return;
 		}
 		if (confirm('確定要修改這筆資料嗎？')) {
-
-				supabase
-					.from(myangularsubtitle) // Ensure the table name is a string
-					.update({
-						textareavalue1: textareavalue1,
-						textareavalue2: textareavalue2,
-						textareavalue3: textareavalue3,
-						textareavalue4: textareavalue4
-					})
-					.eq('id', data.id)
-					.then(({ data, error }) => {
-						if (error) {
-							console.error('Error updating data:', error.message);
-						} else {
-							console.log('Data updated successfully:', data);
-							onReLoad(); // Reload data after deletion
-						}
-					});
-
+			supabase
+				.from(myangularsubtitle) // Ensure the table name is a string
+				.update({
+					textareavalue1: textareavalue1,
+					textareavalue2: textareavalue2,
+					textareavalue3: textareavalue3,
+					textareavalue4: textareavalue4
+				})
+				.eq('id', data.id)
+				.then(({ data, error }) => {
+					if (error) {
+						console.error('Error updating data:', error.message);
+					} else {
+						console.log('Data updated successfully:', data);
+						onReLoad(); // Reload data after deletion
+					}
+				});
 		}
 	}
 
@@ -180,23 +164,30 @@
 		textareavalue4 = '';
 	}
 
-	function Dividefor2(textareavalue2){
-		return ((Number(textareavalue2.split('/')[0]) / Number(textareavalue2.split('/')[1]))*100).toFixed(2);
+	function Dividefor2(textareavalue2) {
+		return (
+			(Number(textareavalue2.split('/')[0]) / Number(textareavalue2.split('/')[1])) *
+			100
+		).toFixed(2);
 	}
 
-	function Minusfor2(textareavalue2){
-		return (Number(textareavalue2.split('/')[0]) - (Number(textareavalue2.split('/')[1])));
+	function Minusfor2(textareavalue2) {
+		return Number(textareavalue2.split('/')[0]) - Number(textareavalue2.split('/')[1]);
 	}
 
-	function DateCountdown(textareavalue1){
-		return new Date(textareavalue1).getTime() - new Date().getTime() > 0 ? Math.floor((new Date(textareavalue1).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)) : '已過期';
+	function DateCountdown(textareavalue1) {
+		return new Date(textareavalue1).getTime() - new Date().getTime() > 0
+			? Math.floor(
+					(new Date(textareavalue1).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+				)
+			: '已過期';
 	}
 
-	function DateCountdownWeek(textareavalue1){
-		return ( DateCountdown(textareavalue1) / 7 ).toFixed(0);
+	function DateCountdownWeek(textareavalue1) {
+		return (DateCountdown(textareavalue1) / 7).toFixed(0);
 	}
 
-	function DateCountdownDay(textareavalue1){
+	function DateCountdownDay(textareavalue1) {
 		return DateCountdown(textareavalue1) % 7;
 	}
 </script>
@@ -213,39 +204,60 @@
 {/if}
 
 {#if data.length > 0}
-		<Table hoverable={true}>
-			<TableHead>
-				<TableHeadCell>{textareavaluetitle1}</TableHeadCell>
-				<TableHeadCell>{textareavaluetitle2}</TableHeadCell>
-				<TableHeadCell>{textareavaluetitle3}</TableHeadCell>
-				<TableHeadCell>{textareavaluetitle4}</TableHeadCell>
-			</TableHead>
-			<TableBody tableBodyClass="divide-y">
-				{#each data as item}
-					{#key item.id}
-						<TableBodyRow>
-							<TableBodyCell>{item.textareavalue1}</TableBodyCell>
-							<TableBodyCell>{item.textareavalue2}</TableBodyCell>
-							<TableBodyCell>{item.textareavalue3}</TableBodyCell>
-							<TableBodyCell>{item.textareavalue4}</TableBodyCell>				
+{#if !ismoreinfo}
+<Button color="dark" onclick={() => ismoreinfo = !ismoreinfo}>更多資訊</Button>
+{/if}
+{#if ismoreinfo}
+<Button color="dark" onclick={() => ismoreinfo = !ismoreinfo}>更少資訊</Button>
+{/if}
+	<Table hoverable={true}>
+		<TableHead>
+			{#if !ismoreinfo}
+			<TableHeadCell>{textareavaluetitle1}</TableHeadCell>
+			<TableHeadCell>{textareavaluetitle2}</TableHeadCell>
+			{/if}
+			{#if ismoreinfo}
+			<TableHeadCell>{textareavaluetitle1}</TableHeadCell>
+			<TableHeadCell>{textareavaluetitle2}</TableHeadCell>
+			<TableHeadCell>{textareavaluetitle3}</TableHeadCell>
+			<TableHeadCell>{textareavaluetitle4}</TableHeadCell>
+			{/if}
+		</TableHead>
+		<TableBody tableBodyClass="divide-y">
+			{#each data as item}
+				{#key item.id}
+					<TableBodyRow>
+						{#if !ismoreinfo}
+						<TableBodyCell>{item.textareavalue1.substring(0,10)}...</TableBodyCell>
+						<TableBodyCell>{item.textareavalue2.substring(0,10)}...</TableBodyCell>
 							{#if myangularsubtitle === 'myangularsub4'}
-							{Dividefor2(item.textareavalue2)}%
-							{Minusfor2(item.textareavalue2)}
+								{Dividefor2(item.textareavalue2)}%
+								{Minusfor2(item.textareavalue2)}
+							{/if}
+						{/if}
+						{#if ismoreinfo}
+						<TableBodyCell>{item.textareavalue1}</TableBodyCell>
+						<TableBodyCell>{item.textareavalue2}</TableBodyCell>
+							<TableBodyCell>{item.textareavalue3}</TableBodyCell>
+							<TableBodyCell>{item.textareavalue4}</TableBodyCell>
+							{#if myangularsubtitle === 'myangularsub4'}
+								{Dividefor2(item.textareavalue2)}%
+								{Minusfor2(item.textareavalue2)}
 							{/if}
 							{#if myangularsubtitle === 'myangularsub7'}
-							倒數{DateCountdown(item.textareavalue1)}天
-							或{DateCountdownWeek(item.textareavalue1)}週
-							又{DateCountdownDay(item.textareavalue1)}天
+								倒數{DateCountdown(item.textareavalue1)}天 或{DateCountdownWeek(
+									item.textareavalue1
+								)}週 又{DateCountdownDay(item.textareavalue1)}天
 							{/if}
 							<Button color="none" onclick={() => onSelectDataClick(item)}>選取</Button>
 							<Button color="dark" onclick={() => onUpdateDataClick(item)}>修改</Button>
 							<Button color="blue" onclick={() => onDeleteDataClick(item.id)}>刪除</Button>
-						</TableBodyRow>
-					{/key}
-				{/each}
-			</TableBody>
-		</Table>
-
+						{/if}
+					</TableBodyRow>
+				{/key}
+			{/each}
+		</TableBody>
+	</Table>
 {/if}
 <div class="mb-6">
 	<Label for="large-input" class="mb-2 block">{textareavaluetitle1}：</Label>
@@ -259,13 +271,13 @@
 	<Label for="small-input" class="mb-2 block">{textareavaluetitle3}：</Label>
 	<Input id="small-input" size="sm" placeholder="" bind:value={textareavalue3} />
 </div>
-	<div class="mb-6">
-		<Label for="small-input" class="mb-2 block">{textareavaluetitle4}：</Label>
-		<textarea id="small-input" size="sm" placeholder="" bind:value={textareavalue4}></textarea>
-	</div>
-	<Button color="none" onclick={onEmptyDataClick}>清空</Button>
-	<Button
-		color="dark"
-		onclick={() => onNewDataClick(textareavalue1, textareavalue2, textareavalue3, textareavalue4)}
-		>新增</Button
-	>
+<div class="mb-6">
+	<Label for="small-input" class="mb-2 block">{textareavaluetitle4}：</Label>
+	<textarea id="small-input" size="sm" placeholder="" bind:value={textareavalue4}></textarea>
+</div>
+<Button color="none" onclick={onEmptyDataClick}>清空</Button>
+<Button
+	color="dark"
+	onclick={() => onNewDataClick(textareavalue1, textareavalue2, textareavalue3, textareavalue4)}
+	>新增</Button
+>
