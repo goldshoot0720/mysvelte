@@ -131,7 +131,7 @@
 		<ButtonGroup>
 			<Button color="dark">部落格資訊管理</Button>
 			<Button color="blue">大位天定資訊管理</Button>
-			<Button color="none">保留天定資訊管理</Button>
+			<Button color="none">保留資訊管理</Button>
 		</ButtonGroup>
 	</div>
 </div>
