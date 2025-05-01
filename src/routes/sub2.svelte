@@ -180,40 +180,31 @@
 	}
 
 	async function CurrentMonthMaxMin() {
-		const now = new Date();
-		const firstDayOfMonth = toPostgresTimestamp(new Date(now.getFullYear(), now.getMonth(), 1));
-		const firstDayOfNextMonth = toPostgresTimestamp(
-			new Date(now.getFullYear(), now.getMonth() + 1, 1)
-		);
+	const now = new Date();
+	const firstDayOfMonth = toPostgresTimestamp(new Date(now.getFullYear(), now.getMonth(), 1));
+	const firstDayOfNextMonth = toPostgresTimestamp(
+		new Date(now.getFullYear(), now.getMonth() + 1, 1)
+	);
 
-		const { data: maxData, error: maxError } = await supabase
-			.from('bankhistory')
-			.select('*')
-			.gte('bankdate', firstDayOfMonth)
-			.lt('bankdate', firstDayOfNextMonth)
-			.order('bankdate', { ascending: false })
-			.limit(1);
+	const { data: allData, error } = await supabase
+		.from('bankhistory')
+		.select('banksum')
+		.gte('bankdate', firstDayOfMonth)
+		.lt('bankdate', firstDayOfNextMonth);
 
-		const { data: minData, error: minError } = await supabase
-			.from('bankhistory')
-			.select('*')
-			.gte('bankdate', firstDayOfMonth)
-			.lt('bankdate', firstDayOfNextMonth)
-			.order('bankdate', { ascending: true })
-			.limit(1);
+	console.log('起始:', firstDayOfMonth, '結束:', firstDayOfNextMonth);
+	console.log('本月所有資料:', allData, '錯誤:', error);
 
-		console.log('起始:', firstDayOfMonth, '結束:', firstDayOfNextMonth);
-		console.log('本月最大值:', maxData, '錯誤:', maxError);
-		console.log('本月最小值:', minData, '錯誤:', minError);
-		if (maxData.length>0)
-			currentmonthmax = maxData[0].banksum;
-		else
-			currentmonthmax = '查無本月資料';
-		if(minData.length>0)
-			currentmonthmin = minData[0].banksum;
-		else
-			currentmonthmin = '查無本月資料';
+	if (allData && allData.length > 0) {
+		const banksums = allData.map(entry => entry.banksum);
+		currentmonthmax = Math.max(...banksums);
+		currentmonthmin = Math.min(...banksums);
+	} else {
+		currentmonthmax = '查無本月資料';
+		currentmonthmin = '查無本月資料';
 	}
+}
+
 
 async function YearlyMonthMaxMin() {
     const now = new Date();
